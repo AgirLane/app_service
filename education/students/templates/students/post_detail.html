@@ -3,6 +3,7 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
+		<p1>Просмотрено {{ post.views }} раз</p1>
     <h1>{{ post.title }}</h1>
     <small>{{ post.created_at|date:"d.m.Y H:i" }}</small>
     <p>{{ post.text|linebreaks }}</p>
