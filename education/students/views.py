@@ -33,9 +33,16 @@ def post_create(request):
 
 def category_posts(request, pk):
     category = get_object_or_404(Category, pk=pk)
-    posts = Post.objects.filter(is_published=True).select_related('category')  # для ForeignKey
-    posts = posts.prefetch_related('tags')  # для ManyToMany
-    return render(request, 'students/category.html', {'category': category, 'posts': posts})
+    posts = (
+        Post.objects
+        .filter(is_published=True, category=category)
+        .select_related('category')
+        .prefetch_related('tags')
+    )
+    return render(request, 'students/category.html', {
+        'category': category,
+        'posts': posts,
+    })
 
 
 def about(request):
@@ -46,4 +53,5 @@ def about(request):
 def hello(request, name):
 
     return render(request, 'students/hello.html', {'name': name})
+
 
